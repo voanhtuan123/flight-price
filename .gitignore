@@ -1,2 +1,8 @@
 .env
 venv/
+app/__pycache__/__init__.cpython-313.pyc
+app/__pycache__/amadeus_client.cpython-313.pyc
+app/__pycache__/flight_search.cpython-313.pyc
+.gitignore
+scripts/__pycache__/test_flight_search.cpython-313.pyc
+.gitignore
