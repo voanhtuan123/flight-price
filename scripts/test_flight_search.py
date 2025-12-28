@@ -3,7 +3,7 @@ from app.flight_search import search_flights
 #import agruments 
 data = search_flights(
     origin="YYC",
-    destination="YVR",
+    destination="HAN",
     date="2026-01-15",
 )
 
