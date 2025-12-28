@@ -1,2 +1,3 @@
 .env
 venv/
+scripts/__pycache__/test_flight_search.cpython-312.pyc
