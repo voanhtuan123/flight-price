@@ -19,11 +19,10 @@ def search_flights(origin, destination, date, adults=1, max_results=5):
         "max": max_results
     }
 
-    #gọi API search flight đến Amadeus
-    data = client.get("/v2/shopping/flight-offers", params=params)
-    offers = data.get("data", [])
+   # Gọi API search flight đến Amadeus
+    offers = client.get("/v2/shopping/flight-offers", params=params)
 
-    #FIX: Kiểm tra nếu không có kết quả
+    # Kiểm tra nếu không có kết quả
     if not offers:
         print(" No flights found for this route")
         return []
@@ -33,10 +32,28 @@ def search_flights(origin, destination, date, adults=1, max_results=5):
         o for o in offers if is_published_fare(o)
     ]
 
-    #FIX: Nếu không có published fare, dùng tất cả offers
+    #Nếu không có published fare, dùng tất cả offers
     if not published_offers:
         print("⚠️ No published fares found, using all available offers")
         published_offers = offers
 
-    
-    return published_offers   #trả về list, không còn là json 
+
+#Dùng unified pricing method (handle cả 1 và nhiều offers)
+    try:
+        priced_offers = client.price_offers(published_offers)
+        print(f"✅ Successfully priced {len(priced_offers)} offers")
+    except Exception as e:
+        print(f"⚠️ Pricing failed: {e}")
+        return []
+
+    # Kiểm tra nếu không có offer nào được price thành công
+    if not priced_offers:
+        print("❌ No offers could be priced")
+        return []
+
+    # Sort theo giá cuối (grandTotal)
+    priced_offers.sort(
+        key=lambda o: float(o["price"]["grandTotal"])
+    )
+
+    return priced_offers
