@@ -59,10 +59,42 @@ class AmadeusClient:
         try:
             res = requests.get(url, headers=headers, params=params)
             res.raise_for_status() #exception 
-        except:
+        except requests.HTTPError as e:
             print(f"❌ API request failed: {e}")
             if res.status_code == 400:
                 print(f"Response: {res.json()}")
             raise
 
         return res.json().get("data", [])
+    
+    def price_offers(self, offers, max_batch = 6):
+        token = self.get_access_token()
+
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        }
+
+        # Chỉ lấy tối đa 6 offers (giới hạn của Amadeus)
+        batch = offers[:6] 
+
+        payload = {
+            "data": {
+            "type": "flight-offers-pricing",
+            "flightOffers": batch  # Gửi nhiều offers cùng lúc
+            }
+        }
+
+        try:
+            #request syntax: request.posts("url", headers, json)
+            r = requests.post(f"{self.base_url}/v1/shopping/flight-offers/pricing",headers=headers,json=payload)
+            r.raise_for_status()
+
+        except requests.HTTPError as e:
+            print(f"❌ Pricing failed: {e}")
+            if r.status_code == 400:
+                print(f"Response: {r.json()}")
+            raise
+
+        return r.json()["data"]["flightOffers"]
+
