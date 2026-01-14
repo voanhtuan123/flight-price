@@ -1,11 +1,13 @@
 from app.amadeus_client import AmadeusClient
 
+from datetime import datetime
+
 def is_published_fare(offer):
     pricing = offer.get("pricingOptions", {})
     fare_types = pricing.get("fareType", [])
     return "PUBLISHED" in fare_types
 
-def search_flights(origin, destination, date, adults=1, max_results=5):
+def search_flights(origin, destination, date, adults=1, max_results=5,):
     #tạo object client (tự động tạo token)
     client = AmadeusClient()
 
@@ -16,7 +18,7 @@ def search_flights(origin, destination, date, adults=1, max_results=5):
         "departureDate": date,
         "adults": adults,
         "currencyCode": "CAD",
-        "max": max_results
+        "max": max_results,
     }
 
    # Gọi API search flight đến Amadeus
@@ -55,5 +57,29 @@ def search_flights(origin, destination, date, adults=1, max_results=5):
     priced_offers.sort(
         key=lambda o: float(o["price"]["grandTotal"])
     )
+
+    exact_match = []
+    nearby_airports = []
+    
+    for offer in priced_offers:
+        final_destination = offer["itineraries"][0]["segments"][-1]["arrival"]["iataCode"]
+        
+        if final_destination == destination:
+            exact_match.append(offer)
+        else:
+            nearby_airports.append(offer)
+    
+    # Ưu tiên exact match, nếu không có thì dùng nearby
+    if exact_match:
+        priced_offers = exact_match
+        print(f"📍 Showing {len(priced_offers)} flights to {destination}")
+    else:
+        priced_offers = nearby_airports
+        print(f"⚠️ No flights to {destination}, showing {len(priced_offers)} flights to nearby airports")
+    
+    if not priced_offers:
+        print("❌ No offers available after filtering")
+        return []
+     
 
     return priced_offers
