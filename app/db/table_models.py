@@ -6,23 +6,42 @@ class FlightSearch(Base):
     __tablename__ = "flight_searches"
     
     id = Column(Integer, primary_key=True)
-    origin = Column(String, index=True)
-    destination = Column(String, index=True)
-    departure_date = Column(Date)
-    adults = Column(Integer)
-    searched_at = Column(DateTime(timezone=True), server_default=func.now())
+    # origin = Column(String, index=True)
+    # destination = Column(String, index=True)
+    # departure_date = Column(Date)
+    # adults = Column(Integer)
+    # searched_at = Column(DateTime(timezone=True), server_default=func.now())
+    flights = Column(String, index=True)
+    flight_date = Column(Date)
+    crawl_date = Column(DateTime(timezone=True), server_default=func.now())
+    duration = Column(String)
+    price = Column(Float)
 
-class FlightPrice(Base):
-    __tablename__ = "flight_prices"
+
+# class FlightPrice(Base):
+#     __tablename__ = "flight_prices"
+    
+#     id = Column(Integer, primary_key=True)
+#     search_id = Column(Integer, ForeignKey("flight_searches.id"))
+#     airline = Column(String)
+#     flight_number = Column(String)
+#     price = Column(Float)
+#     currency = Column(String)
+#     fare_type = Column(String)
+#     duration = Column(String)
+#     number_of_stops = Column(Integer)      
+#     transit_airports = Column(Text)        
+#     checked_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class FlightAnalyze (Base):
+    __tablename__ = "flight_analyzes"
     
     id = Column(Integer, primary_key=True)
     search_id = Column(Integer, ForeignKey("flight_searches.id"))
-    airline = Column(String)
-    flight_number = Column(String)
-    price = Column(Float)
-    currency = Column(String)
-    fare_type = Column(String)
+    
+    flight_date = Column(Date)
+    crawl_date = Column(DateTime(timezone=True), server_default=func.now())
+    date_from_crawl_until_departure = Column(Integer)
     duration = Column(String)
-    number_of_stops = Column(Integer)      
-    transit_airports = Column(Text)        
-    checked_at = Column(DateTime(timezone=True), server_default=func.now())
+    price = Column(Float)
+    price_difference_from_last_crawl = Column(Float)
