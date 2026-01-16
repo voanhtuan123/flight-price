@@ -1,3 +1,8 @@
 .env
 venv/
 scripts/__pycache__/test_flight_search.cpython-312.pyc
+app/__pycache__/__init__.cpython-312.pyc
+scripts/__pycache__/test_flight_search.cpython-312.pyc
+app/__pycache__/flight_search.cpython-312.pyc
+app/__pycache__/amadeus_client.cpython-312.pyc
+scripts/__pycache__/test_flight_search.cpython-312.pyc

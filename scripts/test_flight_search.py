@@ -4,7 +4,7 @@ from app.flight_search import search_flights
 data = search_flights(
     origin="YYC",
     destination="HAN",
-    date="2026-01-15",
+    date="2026-03-15",
 )
 
 for offer in data:
