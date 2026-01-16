@@ -1,6 +1,12 @@
+import sys
+import os
+
+# Add parent directory to path so we can import app
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from app.flight_search import search_flights
 
-#import agruments 
+# import arguments
 data = search_flights(
     origin="YYC",
     destination="HAN",
@@ -11,16 +17,18 @@ for offer in data:
     price = offer["price"]["total"]
     currency = offer["price"]["currency"]
     print(f"Price: {price} {currency}")
+    
     duration = offer["itineraries"][0]["duration"]
     print("Duration: ", duration)
-
+    
     for segment in offer["itineraries"][0]["segments"]:
         print(
             segment["carrierCode"],
             segment["number"],
             segment["departure"]["iataCode"],
-            "→",
+            "->",
             segment["arrival"]["iataCode"],
             segment["departure"]["at"]
         )
+    
     print("-----")

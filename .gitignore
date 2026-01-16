@@ -1,5 +1,15 @@
 .env
 venv/
+app/__pycache__/__init__.cpython-313.pyc
+app/__pycache__/amadeus_client.cpython-313.pyc
+app/__pycache__/flight_search.cpython-313.pyc
+.gitignore
+scripts/__pycache__/test_flight_search.cpython-313.pyc
+.gitignore
+app/db/__pycache__/database.cpython-313.pyc
+app/db/__pycache__/models.cpython-313.pyc
+scripts/__pycache__/init_db.cpython-313.pyc
+app/db/__pycache__/table_models.cpython-313.pyc
 scripts/__pycache__/test_flight_search.cpython-312.pyc
 app/__pycache__/__init__.cpython-312.pyc
 scripts/__pycache__/test_flight_search.cpython-312.pyc
