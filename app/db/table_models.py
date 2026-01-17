@@ -11,11 +11,13 @@ class FlightSearch(Base):
     # departure_date = Column(Date)
     # adults = Column(Integer)
     # searched_at = Column(DateTime(timezone=True), server_default=func.now())
-    flights = Column(String, index=True)
+    flight_path = Column(String, index=True)
+    code_flights = Column(String, index=True)
     flight_date = Column(Date)
     crawl_date = Column(DateTime(timezone=True), server_default=func.now())
     duration = Column(String)
     price = Column(Float)
+    stops = Column(Integer)
 
 
 # class FlightPrice(Base):

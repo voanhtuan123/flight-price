@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.db.database import engine, Base
-from app.db.table_models import FlightSearch, FlightPrice
+from app.db.table_models import FlightSearch, FlightAnalyze
 
 def init_database():
     """Create all tables"""
