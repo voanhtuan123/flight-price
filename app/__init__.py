@@ -9,8 +9,8 @@ Base.metadata.create_all(bind=engine)
 
 #params
 origin = "YYC"
-destination = "HAN"
-date = "2026-03-15"
+destination = "YVR"
+date = "2026-02-15"
 max = 10
 crawl_date = datetime.now().strftime("%Y-%m-%d")
 

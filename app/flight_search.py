@@ -1,6 +1,4 @@
 from app.amadeus_client import AmadeusClient
-from app.db.database import SessionLocal
-from app.db.table_models import FlightSearch, FlightPrice
 from datetime import datetime
 
 def is_published_fare(offer):

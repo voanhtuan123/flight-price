@@ -6,8 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get database URL from environment variable
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./flight_prices.db")
-
+DATABASE_URL = os.getenv("DATABASE_URL", "not_set")
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
