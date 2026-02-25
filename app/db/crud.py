@@ -19,7 +19,7 @@ def create_flight_price(db: Session, search_id: int, airline: str,
                        flight_number: str, price: float, currency: str,
                        fare_type: str, duration: str):
     """Create a flight price record"""
-    flight_price = table_models.FlightPrice(
+    flight_price = table_models.FlightAnalyze(
         search_id=search_id,
         airline=airline,
         flight_number=flight_number,

@@ -29,7 +29,11 @@ class AmadeusClient:
 
         #gửi POST(api method) xin token 
         res = requests.post(url, data=data)
-        res.raise_for_status()      #exception
+        if res.status_code != 200:
+            print("Amadeus error response:")
+            print(res.text)
+            res.raise_for_status()
+      #exception
 
         #lưu token
         token_data = res.json()
@@ -53,5 +57,8 @@ class AmadeusClient:
 
         #gửi GET request
         res = requests.get(url, headers=headers, params=params)
-        res.raise_for_status() #exception 
+        if res.status_code != 200:
+            print("Amadeus error response:")
+            print(res.text)
+            res.raise_for_status()
         return res.json()
