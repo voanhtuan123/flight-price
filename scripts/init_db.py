@@ -1,6 +1,7 @@
 import os
 import sys
 from pathlib import Path
+from sqlalchemy import text
 
 # Setup path
 project_root = Path(__file__).parent.parent
@@ -29,7 +30,7 @@ def main():
         # Test connection
         print("Testing connection to database...")
         with engine.connect() as conn:
-            conn.execute("SELECT 1")
+            conn.execute(text("SELECT 1"))
         print("Connection successful!")
         print()
         
