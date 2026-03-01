@@ -11,13 +11,19 @@ Base.metadata.create_all(bind=engine)
 origin = "YYC"
 destination = "HAN"
 start_date = datetime.strptime("2026-04-15", "%Y-%m-%d")
-end_date = datetime.strptime("2026-06-30", "%Y-%m-%d")
-max = 10
+end_date = datetime.strptime("2026-12-30", "%Y-%m-%d")
+max_results = 10
 crawl_date = datetime.now().strftime("%Y-%m-%d")
 
 #Process flight data
 all_flights = []
 
+# Start from tomorrow if the date is in the past
+if start_date < datetime.now():
+    start_date = datetime.now() + timedelta(days=1)  
+
+
+# Loop through each date in the range
 while start_date <= end_date:
     date = start_date.strftime("%Y-%m-%d")
     print(f"\nCrawling date: {date}")
@@ -29,7 +35,7 @@ while start_date <= end_date:
         origin=origin,
         destination=destination,
         date=date,
-        max_results=max
+        max_results=max_results
     )
 
 
