@@ -9,9 +9,22 @@ on:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    # Only run on odd weeks (bi-weekly cadence)
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && (github.run_number % 2 == 1))
 
+    # Only run on odd weeks (bi-weekly cadence)
+    steps: 
+      - name: Check if odd ISO week 
+        id: check_week
+        run: |
+          WEEK_NUM=$(date -u +%V)
+          echo "Current ISO week number: $WEEK_NUM"
+          if [ $((10#$WEEK_NUM % 2)) -eq 0 ]; then
+            echo "Even week, skipping crawl."
+            exit 0
+          else
+            echo "Odd week, proceeding with crawl."
+          fi
+    
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
