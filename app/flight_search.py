@@ -11,7 +11,7 @@ def search_flights(origin, destination, date, adults=1, max_results=5):
     # tạo object client (tự động tạo token)
     client = AmadeusClient()
     
-    # các argument để search
+    # set params cho API request
     params = {
         "originLocationCode": origin,
         "destinationLocationCode": destination,
@@ -21,13 +21,13 @@ def search_flights(origin, destination, date, adults=1, max_results=5):
         "max": max_results
     }
     
-    # gọi API search flight dến Amadeus
+    # call API search flight to Amadeus
     data = client.get("/v2/shopping/flight-offers", params=params)
     offers = data.get("data", [])
     
-    # trả về list
+    # return LIST TYPE of flight offers with PUBLISHED fare type only
     published_offers = [
         o for o in offers if is_published_fare(o)
     ]
     
-    return published_offers  # trả về list, không còn là json
+    return published_offers  

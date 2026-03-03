@@ -13,13 +13,13 @@ class AmadeusClient:
         self.token = None
         self.token_expiry = 0
 
-    # lấy token hoặc dùng token cũ nếu còn hạn
+    #get token, reuse if valid, otherwise request new token
     def get_access_token(self):      
-        #Đúng token còn hạn thì dùng lại  
+        #reuse token if valid 
         if self.token != None and time.time() < self.token_expiry:
             return self.token
         
-        #Lấy url từ OAuth2 (agrument lấy token)
+        #request new token
         url = f"{self.base_url}/v1/security/oauth2/token"
         data = {
             "grant_type": "client_credentials",
@@ -27,35 +27,35 @@ class AmadeusClient:
             "client_secret": self.api_secret
         }
 
-        #gửi POST(api method) xin token 
+        #send POST request to get token 
         res = requests.post(url, data=data)
         if res.status_code != 200:
             print("Amadeus error response:")
             print(res.text)
             res.raise_for_status()
-      #exception
 
-        #lưu token
+
+        #parse token response
         token_data = res.json()
         self.token = token_data["access_token"]
         self.token_expiry = time.time() + token_data["expires_in"] - 60
 
         return self.token
     
-    #gọi bất kì API GET nào của Amadeus
+    #send GET request to Amadeus API with authorization header
     def get(self, endpoint, params=None):
 
         #get token
         token = self.get_access_token() 
 
-        #Header bắt buộc của Amadeus
+        #set authorization header
         headers = {
             "Authorization": f"Bearer {token}"
         }
         
         url = f"{self.base_url}{endpoint}"
 
-        #gửi GET request
+        #send GET request
         res = requests.get(url, headers=headers, params=params)
         if res.status_code != 200:
             print("Amadeus error response:")

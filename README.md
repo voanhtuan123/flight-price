@@ -181,6 +181,7 @@ DEBUG=True
 docker info
 ```
 
+
 ---
 
 ## 🐳 Starting the Database
@@ -234,7 +235,6 @@ Testing connection to database...
 
 ---
 
-## ▶️ Running the Application
 
 ### Search and Save Flight Prices:
 ```bash
