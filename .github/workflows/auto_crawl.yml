@@ -9,9 +9,9 @@ on:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-
-    # Only run on odd weeks (bi-weekly cadence)
     steps: 
+    
+    # Only run on odd weeks (bi-weekly cadence)
       - name: Check if odd ISO week 
         id: check_week
         run: |
@@ -24,8 +24,6 @@ jobs:
             echo "Odd week, proceeding with crawl."
           fi
     
-    
-    steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
